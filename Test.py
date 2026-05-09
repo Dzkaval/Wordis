@@ -1,5 +1,4 @@
 from pydoc import text
-
 import flet as ft
 
 
@@ -25,7 +24,7 @@ def main(page: ft.Page):
                 ft.Row(
                     [
                         ft.TextButton("⬅️Home", on_click=lambda e: page.go("/")),
-                        ft.TextButton("Create a list", on_click=open_dialog),
+                        ft.TextButton("Create a list", on_click=lambda e: open_dialog("create_list")),
                         ft.TextButton("Add a word", on_click=lambda e: page.go("/add_word"))
                     ]
                 )
@@ -46,16 +45,18 @@ def main(page: ft.Page):
             ]
         )
 
-    def open_dialog(e):
-        dialog = ft.AlertDialog(
-            modal=True,
-            title=ft.Text("Create a list"),
-            content=ft.TextField(label="List name"),
-            actions=[
-                ft.TextButton("Cancel", on_click=lambda e: close_dialog(dialog)),
-                ft.TextButton("Create", on_click=lambda e: close_dialog(dialog)),
-            ],
-        )
+    def open_dialog(dialog_type):
+        if dialog_type == 'create_list':
+            list_name = ft.TextField(label="List name")
+            dialog = ft.AlertDialog(
+                modal=True,
+                title=ft.Text("Create a list"),
+                content=list_name,
+                actions=[
+                    ft.TextButton("Cancel", on_click=lambda e: close_dialog(dialog)),
+                    ft.TextButton("Create", on_click=lambda e: create_list(list_name.value,dialog)),
+                ],
+            )
 
         page.overlay.append(dialog)
         dialog.open = True
@@ -64,6 +65,9 @@ def main(page: ft.Page):
     def close_dialog(dialog):
         dialog.open = False
         page.update()
+
+    def create_list(list_name, dialog):
+        print(f"{list_name} was created")
 
     routes = {
         "/": home_view,
