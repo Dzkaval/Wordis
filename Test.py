@@ -1,93 +1,38 @@
-from pydoc import text
-import flet as ft
+from Functions import get_connection
+from Functions import insert_verb
 
+insert_verb(
+    infinitive="patarti",
+    stem="patar-",
+    translation_en="to advise",
 
-def main(page: ft.Page):
-    def home_view():
-        return ft.View(
-            route='/',
-            controls=[
-                ft.Text('Home'),
-                ft.Row(
-                    [
-                        ft.TextButton("Lists",on_click=lambda e: page.go("/lists")),
-                        ft.TextButton("Settings")
-                    ]
-                )
-            ]
-        )
-    def lists_view():
-        return ft.View(
-            route='/lists',
-            controls=[
-                ft.Text('Lists'),
-                ft.Row(
-                    [
-                        ft.TextButton("⬅️Home", on_click=lambda e: page.go("/")),
-                        ft.TextButton("Create a list", on_click=lambda e: open_dialog("create_list")),
-                        ft.TextButton("Add a word", on_click=lambda e: page.go("/add_word"))
-                    ]
-                )
-            ]
-        )
+    present_as="patarsiu",
+    present_tu="patarsi",
+    present_jis_ji="patars",
+    present_mes="patarsime",
+    present_jus="patarsite",
+    present_jie_jos="patars",
 
-    def add_word_view():
-        return ft.View(
-            route='/add_word',
-            controls=[
-                ft.Text('Add word'),
-                ft.Row(
-                    [
-                        ft.TextButton("⬅️Home", on_click=lambda e: page.go("/")),
-                        ft.TextButton("Add a word")
-                    ]
-                )
-            ]
-        )
+    past_as="patariau",
+    past_tu="patarei",
+    past_jis_ji="patarė",
+    past_mes="patarėme",
+    past_jus="patarėte",
+    past_jie_jos="patarė",
 
-    def open_dialog(dialog_type):
-        if dialog_type == 'create_list':
-            list_name = ft.TextField(label="List name")
-            dialog = ft.AlertDialog(
-                modal=True,
-                title=ft.Text("Create a list"),
-                content=list_name,
-                actions=[
-                    ft.TextButton("Cancel", on_click=lambda e: close_dialog(dialog)),
-                    ft.TextButton("Create", on_click=lambda e: create_list(list_name.value,dialog)),
-                ],
-            )
+    future_as="patarsiu",
+    future_tu="patarsi",
+    future_jis_ji="patars",
+    future_mes="patarsime",
+    future_jus="patarsite",
+    future_jie_jos="patars",
 
-        page.overlay.append(dialog)
-        dialog.open = True
-        page.update()
+    sample_1_lt="Aš patarsiu tau.",
+    sample_1_en="I will advise you.",
 
-    def close_dialog(dialog):
-        dialog.open = False
-        page.update()
+    sample_2_lt="Ji patarė man nueiti pas gydytoją.",
+    sample_2_en="She advised me to go to the doctor.",
 
-    def create_list(list_name, dialog):
-        print(f"{list_name} was created")
-
-    routes = {
-        "/": home_view,
-        "/lists": lists_view,
-        "/add_word": add_word_view
-    }
-
-    # --- Router ---
-    def route_change(e):
-        page.views.clear()
-
-        view_builder = routes.get(page.route)
-
-        if view_builder:
-            page.views.append(view_builder())
-
-        page.update()
-
-    page.on_route_change = route_change
-
-    route_change(None)
-
-ft.run(main)
+    sample_3_lt="Mes patarsime jums geriausią sprendimą.",
+    sample_3_en="We will advise you on the best solution."
+)
